@@ -1,0 +1,16 @@
+h5{
+    border: 2px solid steelblue;
+    margin:  5px;
+    padding: 10px;z-index: 2;
+    white-space: nowrap;
+}
+.sizes{
+    width: 100%;
+    height: 100vh;
+}
+.canvas{
+    /* position: absolute;
+    left: 0;
+    top: 0; */
+
+}
