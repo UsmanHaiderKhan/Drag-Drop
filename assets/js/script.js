@@ -2,7 +2,9 @@ $(document).ready(function () {
     var diagram = [];
     canvas = $(".canvas");
     tools = $(".tools");
-    $("h5").draggable({
+    $("p").draggable({
+        revert: "invalid",
+        stack: ".draggable",
         helper: "clone"
     });
     canvas.droppable({
@@ -26,44 +28,73 @@ $(document).ready(function () {
             }
             else if (ui.helper.hasClass("tool-5")) {
                 node.type = "tool-5";
-            } else {
+            }
+            else if (ui.helper.hasClass("tool-6")) {
+                node.type = "tool-6";
+            }
+            else if (ui.helper.hasClass("tool-7")) {
+                node.type = "tool-7";
+            }
+            else if (ui.helper.hasClass("tool-8")) {
+                node.type = "tool-8";
+            }
+            else if (ui.helper.hasClass("tool-9")) {
+                node.type = "tool-9";
+            }
+            else {
                 return;
             }
+
             diagram.push(node);
             renderDiagrame(diagram);
-        }
+            diagram=[];
+        },
+        accept: "p",
     });
 
 
     function renderDiagrame(diagram) {
-        canvas.empty();
+     //  canvas.empty(); 
         for (var d in diagram) {
             var node = diagram[d];
-            // canvas.append("<h5>Tool-1</h5>");
+            // canvas.append("<p>Tool-1</p>");
             var html = "";
             if (node.type === "tool-1") {
-                html = "<h5>Tool-1</h5>";
+                html = "<p>Signature</p>";
             }
 
             else if (node.type === "tool-2") {
-                html = "<h5>Tool-2</h5>";
+                html = "<p>Initial</p>";
             }
             else if (node.type === "tool-3") {
-                html = "<h5>Tool-3</h5>";
+                html = "<p>Stamp</p>";
             }
             else if (node.type === "tool-4") {
-                html = "<h5>Tool-4</h5>";
+                html = "<p>Date Signed</p>";
             }
             else if (node.type === "tool-5") {
-                html = "<h5>Tool-5</h5>";
+                html = "<p>Name</p>";
             }
+            else if (node.type === "tool-6") {
+                html = "<p>Email</p>";
+            }
+            else if (node.type === "tool-7") {
+                html = "<p>Text</p>";
+            }
+            else if (node.type === "tool-8") {
+                html = "<p>Email</p>";
+            }
+            else if (node.type === "tool-9") {
+                html = "<p>Radio</p>";
+            }
+
             var dom = $(html).css({
                 "position": "absolute",
                 "top": node.position.top,
-                "left": node.position.left
+                "left": node.position.left,
+                "z-index": '1'
             }).draggable({
                 stop: function (event, ui) {
-                    console.log(ui);
                     var id = ui.helper.attr("id");
                     for (var i in diagram) {
                         if (diagram[i]._id == id) {
@@ -72,9 +103,8 @@ $(document).ready(function () {
                         }
                     }
                 }
-            }).attr("id", node._id);
+            }).resizable().attr("id", node._id);
             canvas.append(dom);
-
         }
     }
 });
