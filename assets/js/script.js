@@ -48,8 +48,10 @@ $(document).ready(function () {
             diagram.push(node);
             renderDiagrame(diagram);
             diagram=[];
+            callSideNav();
         },
         accept: "p",
+        
     });
 
 
@@ -107,4 +109,18 @@ $(document).ready(function () {
             canvas.append(dom);
         }
     }
+    
+    $('#dismiss, .overlay,.navbar-btn').on('click', function () {
+        $('#sidebar').removeClass('active');
+        $('.myoverlay').removeClass('active');
+    });
+    
+    function callSideNav() {
+            $('#sidebar').addClass('active');
+            $('.myoverlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    }
+
+   
 });
