@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" />
+    <title>PDF Converter</title>
+</head>
+
+<body>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="jumbotron" id="content">
+                        <h2>Main Heading</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quam amet tempora ducimus
+                            repellendus quidem,
+                            tenetur itaque at dolor sed magnam eaque necessitatibus temporibus dolorem debitis iure
+                            atque cumque iusto.
+                            Quod dolorem commodi ea velit accusantium sunt ratione perspiciatis labore, maxime
+                            reprehenderit fugit
+                            doloremque provident nihil numquam tempora, voluptatibus voluptate quidem eligendi.
+                            Voluptatibus voluptate,
+                            perferendis ipsam earum nostrum quasi sapiente.
+                            A quo possimus ut aliquam mollitia, sed beatae, id consectetur doloribus neque, delectus
+                            explicabo tempora
+                            ex dignissimos eius! Laborum suscipit culpa, esse cupiditate doloremque veniam nesciunt vel
+                            dolor molestias
+                            consectetur.
+                            Veritatis eius eligendi rem quo obcaecati sequi omnis vero velit. Exercitationem illum alias
+                            sequi ipsum
+                            vero quam, at eaque quos omnis ex! Est fugiat voluptatibus tempora quia dolores quam
+                            molestiae!
+                            Amet accusantium quasi similique incidunt? Recusandae accusantium nam fugit possimus facere,
+                            deleniti modi
+                            quod ullam alias qui pariatur perspiciatis distinctio perferendis. Laborum odit vero maxime
+                            voluptatem.
+                            Sapiente aperiam aliquam hic.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div id="editor"></div>
+                <button class="btn btn-outline-dark" id="cmd">Generate PDF</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var doc = new jsPDF();
+            console.log("Document =" + doc);
+            var specialElementHandlers = {
+                '#editor': function (element, renderer) {
+                    return true;
+                }
+            };
+            $('#cmd').click(function () {
+                doc.fromHTML($('#content').html(), 15, 15, {
+                    'width': 170,
+                    'elementHandlers': specialElementHandlers
+                });
+                doc.save('signature.pdf');
+            });
+        });
+    </script>
+</body>
+
+</html>
