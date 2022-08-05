@@ -6,54 +6,398 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <style>
+        /* Layout */
+        .s-layout {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .s-layout__content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+
+        /* Sidebar */
+        .s-sidebar__trigger {
+            z-index: 2;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4em;
+            background: #192b3c;
+        }
+
+        .s-sidebar__trigger>i {
+            display: inline-block;
+            margin: 1.5em 0 0 1.5em;
+            color: black;
+        }
+
+        .s-sidebar__nav {
+            position: fixed;
+            top: 0;
+            left: -15em;
+            overflow: hidden;
+            transition: all .3s ease-in;
+            width: 15em;
+            height: 100%;
+            background: lightgray;
+            color: black;
+        }
+
+        .s-sidebar__nav:hover,
+        .s-sidebar__nav:focus,
+        .s-sidebar__trigger:focus+.s-sidebar__nav,
+        .s-sidebar__trigger:hover+.s-sidebar__nav {
+            left: 0;
+        }
+
+        .s-sidebar__nav ul {
+            position: absolute;
+            top: 4em;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            width: 15em;
+        }
+
+        .s-sidebar__nav ul li {
+            width: 100%;
+        }
+
+        .s-sidebar__nav-link {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 4em;
+        }
+
+        .s-sidebar__nav-link em {
+            position: absolute;
+            top: 50%;
+            left: 3em;
+            color: black;
+            transform: translateY(-50%);
+        }
+
+        .s-sidebar__nav-link>i {
+            position: absolute;
+            top: 0;
+            right: 1em;
+            display: inline-block;
+            width: 4em;
+            height: 4em;
+            color: #000;
+        }
+
+        .s-sidebar__nav-link>i::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Mobile First */
+        @media (min-width: 42em) {
+            .s-layout__content {
+                margin-left: 4em;
+            }
+
+            /* Sidebar */
+            .s-sidebar__trigger {
+                width: 4em;
+            }
+
+            .s-sidebar__nav {
+                width: 4em;
+                left: 0;
+            }
+
+            .s-sidebar__nav:hover,
+            .s-sidebar__nav:focus,
+            .s-sidebar__trigger:hover+.s-sidebar__nav,
+            .s-sidebar__trigger:focus+.s-sidebar__nav {
+                width: 15em;
+            }
+        }
+
+        @media (min-width: 68em) {
+            .s-layout__content {
+                margin-left: 15em;
+            }
+
+            /* Sidebar */
+            .s-sidebar__trigger {
+                display: none
+            }
+
+            .s-sidebar__nav {
+                width: 15em;
+            }
+
+            .s-sidebar__nav ul {
+                top: 1.3em;
+            }
+        }
+    </style>
     <title>PDF Converter</title>
 </head>
 
 <body>
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="jumbotron" id="content">
-                        <h2>Main Heading</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quam amet tempora ducimus
-                            repellendus quidem,
-                            tenetur itaque at dolor sed magnam eaque necessitatibus temporibus dolorem debitis iure
-                            atque cumque iusto.
-                            Quod dolorem commodi ea velit accusantium sunt ratione perspiciatis labore, maxime
-                            reprehenderit fugit
-                            doloremque provident nihil numquam tempora, voluptatibus voluptate quidem eligendi.
-                            Voluptatibus voluptate,
-                            perferendis ipsam earum nostrum quasi sapiente.
-                            A quo possimus ut aliquam mollitia, sed beatae, id consectetur doloribus neque, delectus
-                            explicabo tempora
-                            ex dignissimos eius! Laborum suscipit culpa, esse cupiditate doloremque veniam nesciunt vel
-                            dolor molestias
-                            consectetur.
-                            Veritatis eius eligendi rem quo obcaecati sequi omnis vero velit. Exercitationem illum alias
-                            sequi ipsum
-                            vero quam, at eaque quos omnis ex! Est fugiat voluptatibus tempora quia dolores quam
-                            molestiae!
-                            Amet accusantium quasi similique incidunt? Recusandae accusantium nam fugit possimus facere,
-                            deleniti modi
-                            quod ullam alias qui pariatur perspiciatis distinctio perferendis. Laborum odit vero maxime
-                            voluptatem.
-                            Sapiente aperiam aliquam hic.
-                        </p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="s-layout">
+                    <!-- Sidebar -->
+                    <div class="s-layout__sidebar">
+                        <a class="s-sidebar__trigger" href="#0">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <nav class="s-sidebar__nav">
+                            <ul>
+                                <li>
+                                    <a class="s-sidebar__nav-link" href="#0">
+                                        <em>Custome Fields</em><i data-toggle="modal" data-target=".bd-example-modal-lg"
+                                            class="fa fa-add"></i>
+                                    </a>
+                                </li>
+
+                                <!-- <li>
+                                    <a class="s-sidebar__nav-link" href="#0">
+                                        <i class="fa fa-user"></i><em>My Profile</em>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="s-sidebar__nav-link" href="#0">
+                                        <i class="fa fa-camera"></i><em>Camera</em>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
-            <div class="mt-4">
-                <div id="editor"></div>
-                <button class="btn btn-outline-dark" id="cmd">Generate PDF</button>
+            <!-- Bootstrap Modal -->
+            <!-- Modal -->
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <form action="">
+                                    <div class="form-group">
+                                        <label for="name">Name *</label>
+                                        <input type="text" id="name" class="form-control" placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dd">Type</label>
+                                        <select class="form-control">
+                                            <option value="txt">Text</option>
+                                            <option value="txt">Initial</option>
+                                            <option value="txt">Stamp</option>
+                                            <option value="txt">Data Signed</option>
+                                            <option value="txt">Company</option>
+                                            <option value="txt">Title</option>
+                                            <option value="txt">Attachment</option>
+                                            <option value="txt">Note</option>
+                                            <option value="txt">Decline</option>
+                                            <option value="txt">Approve</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="initial">Initial</label>
+                                        <input type="text" id="initial" class="form-control" placeholder="Initial">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="req">&nbsp;<label for="req">Required</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="read">&nbsp;<label for="read">Read Only</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="shared">&nbsp;<label for="shared">Shared</label>
+                                    </div>
+                                    <hr>
+                                    <h4>Collaboration</h4>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="shared">&nbsp;<label for="shared">Recipients Can
+                                            Collaborate</label>
+                                    </div>
+                                    <hr>
+                                    <h4>Formatting</h4>
+                                    <div class="form-group">
+                                        <label for="name">Font</label>
+                                        <select class="form-control">
+                                            <option value="txt">Text</option>
+                                            <option value="txt">Initial</option>
+                                            <option value="txt">Stamp</option>
+                                            <option value="txt">Data Signed</option>
+                                            <option value="txt">Company</option>
+                                            <option value="txt">Title</option>
+                                            <option value="txt">Attachment</option>
+                                            <option value="txt">Note</option>
+                                            <option value="txt">Decline</option>
+                                            <option value="txt">Approve</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Font Color</label>
+                                        <select class="form-control">
+                                            <option value="txt">Text</option>
+                                            <option value="txt">Initial</option>
+                                            <option value="txt">Stamp</option>
+                                            <option value="txt">Data Signed</option>
+                                            <option value="txt">Company</option>
+                                            <option value="txt">Title</option>
+                                            <option value="txt">Attachment</option>
+                                            <option value="txt">Note</option>
+                                            <option value="txt">Decline</option>
+                                            <option value="txt">Approve</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group w-50">
+                                        <label for="name">Font Size</label>
+                                        <select class="form-control">
+                                            <option value="txt">Text</option>
+                                            <option value="txt">Initial</option>
+                                            <option value="txt">Stamp</option>
+                                            <option value="txt">Data Signed</option>
+                                            <option value="txt">Company</option>
+                                            <option value="txt">Title</option>
+                                            <option value="txt">Attachment</option>
+                                            <option value="txt">Note</option>
+                                            <option value="txt">Decline</option>
+                                            <option value="txt">Approve</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" placeholder="Sample Text"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="read">&nbsp;<label for="read">Hide text with
+                                            asterisks</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="shared">&nbsp;<label for="shared">Fixed Width</label>
+                                    </div>
+                                    <hr>
+                                    <h2>Size</h2>
+                                    <div class="form-group">
+                                        <label for="width">Width</label>
+                                        <input type="text" id="width" class="form-control" placeholder="width">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="height">Height</label>
+                                        <input type="text" id="height" class="form-control" placeholder="Height">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="chr">Max Characters</label>
+                                        <input type="text" id="chr" class="form-control" placeholder="chr">
+                                    </div>
+                                    <hr>
+                                    <h4>Default Validation</h4>
+                                    <div class="form-group">
+                                        <label for="name">Validation Type</label>
+                                        <select class="form-control">
+                                            <option value="txt">Text</option>
+                                            <option value="txt">Initial</option>
+                                            <option value="txt">Stamp</option>
+                                            <option value="txt">Data Signed</option>
+                                            <option value="txt">Company</option>
+                                            <option value="txt">Title</option>
+                                            <option value="txt">Attachment</option>
+                                            <option value="txt">Note</option>
+                                            <option value="txt">Decline</option>
+                                            <option value="txt">Approve</option>
+                                        </select>
+                                    </div>
+                                    <hr>
+                                    <h4>Default Advanced</h4>
+                                    <div class="form-group">
+                                        <label for="tooltip">Tooltip</label>
+                                        <input type="text" id="tooltip" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="auto">AutoPlace Text</label>
+                                        <input type="text" id="auto" class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="jumbotron" id="content">
+                                <h2>Main Heading</h2>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quam amet tempora
+                                    ducimus
+                                    repellendus quidem,
+                                    tenetur itaque at dolor sed magnam eaque necessitatibus temporibus dolorem debitis
+                                    iure
+                                    atque cumque iusto.
+                                    Quod dolorem commodi ea velit accusantium sunt ratione perspiciatis labore, maxime
+                                    reprehenderit fugit
+                                    doloremque provident nihil numquam tempora, voluptatibus voluptate quidem eligendi.
+                                    Voluptatibus voluptate,
+                                    perferendis ipsam earum nostrum quasi sapiente.
+                                    A quo possimus ut aliquam mollitia, sed beatae, id consectetur doloribus neque,
+                                    delectus
+                                    explicabo tempora
+                                    ex dignissimos eius! Laborum suscipit culpa, esse cupiditate doloremque veniam
+                                    nesciunt vel
+                                    dolor molestias
+                                    consectetur.
+                                    Veritatis eius eligendi rem quo obcaecati sequi omnis vero velit. Exercitationem
+                                    illum alias
+                                    sequi ipsum
+                                    vero quam, at eaque quos omnis ex! Est fugiat voluptatibus tempora quia dolores quam
+                                    molestiae!
+                                    Amet accusantium quasi similique incidunt? Recusandae accusantium nam fugit possimus
+                                    facere,
+                                    deleniti modi
+                                    quod ullam alias qui pariatur perspiciatis distinctio perferendis. Laborum odit vero
+                                    maxime
+                                    voluptatem.
+                                    Sapiente aperiam aliquam hic.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div id="editor"></div>
+                        <button class="btn btn-outline-dark" id="cmd">Generate PDF</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-
-
-    <script src="./assets/js/jquery.min.js"></script>
+    <!-- <script src="./assets/js/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
     <script>
         $(document).ready(function () {
